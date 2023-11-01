@@ -1,6 +1,6 @@
 # Place
 
-PlaYce is an event application for Cameroon that helps users find events based on their interests, location, and availability.
+Place is an event application for Cameroon that helps users find events based on their interests, location, and availability.
 
 # Description
 
