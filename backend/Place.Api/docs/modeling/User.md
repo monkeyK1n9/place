@@ -176,7 +176,7 @@ Minimum length 3 characters
 <br/>
 
 
-> Change First name
+> Change first name
 
 Update the first name of the authenticated user.
 
@@ -232,6 +232,69 @@ Minimum length 3 characters
 
 
 <br/> <br/>
+
+
+
+> Change user last name
+
+Update the first name of the authenticated user.
+
+<br/>
+
+
+Method definition :
+```csharp
+public void ChangeLastName(string name)
+```
+
+<table>
+<thead>
+<tr>
+<th>
+Parameters
+</th>
+<th>
+Type
+</th>
+<th>
+Description
+</th>
+<th>
+Constraints
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code>
+</td>
+<td>
+<code lang="csharp">string</code>
+</td>
+<td>
+The new first name.
+</td>
+<td>
+<ul>
+<li>
+Could not be null or empty string
+</li>
+<li>
+Minimum length 3 characters
+</li>
+</ul> 
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<br/> <br/>
+
+
+
+
 
 > Change Password
 
@@ -348,3 +411,21 @@ The password hashes should match
 </tr>
 </tbody>
 </table>
+
+
+
+<br/>
+<br/>
+
+
+> Confirm email
+
+Confirm the email provided during the registration or when the profile is updated.
+
+<br/>
+
+Method definition :
+```csharp
+public void ConfirmEmail()
+```
+
