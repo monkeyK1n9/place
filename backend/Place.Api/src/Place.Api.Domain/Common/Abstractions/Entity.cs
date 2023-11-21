@@ -12,7 +12,6 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>, IDomainEvent
     /// <summary>
     /// Abstract class representing an entity.
     /// </summary>
-    /// <typeparam name="TId">The type of the entity identifier.</typeparam>
     public TId Id { get; protected set; }
 
     /// <summary>

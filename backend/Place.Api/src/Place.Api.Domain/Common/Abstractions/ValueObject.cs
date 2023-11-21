@@ -19,7 +19,7 @@ public abstract class ValueObject : IEquatable<ValueObject>
             return false;
         }
 
-        var valueObject = (ValueObject)obj;
+        ValueObject valueObject = (ValueObject)obj;
         return this.GetEqualityComponents()
             .SequenceEqual(valueObject.GetEqualityComponents());
     }
