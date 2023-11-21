@@ -1,4 +1,4 @@
-namespace Place.Api.Domain.Common;
+namespace Place.Api.Domain.Common.Abstractions;
 
 public abstract class AggregateRootId<TId> : ValueObject
 {

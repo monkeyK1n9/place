@@ -1,4 +1,4 @@
-namespace Place.Api.Domain.Common;
+namespace Place.Api.Domain.Common.Abstractions;
 
 /// <summary>
 /// Abstract class representing an aggregate root.
