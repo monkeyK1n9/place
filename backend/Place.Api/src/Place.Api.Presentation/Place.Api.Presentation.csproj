@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+      <GenerateDocumentationFile>True</GenerateDocumentationFile>
+      <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
