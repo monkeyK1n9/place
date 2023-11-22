@@ -4,7 +4,9 @@ using ErrorOr;
 
 public static class DomainErrors
 {
-    internal static class Email
+#pragma warning disable CA1034
+    public static class Email
+
     {
         public static Error DuplicateEmail => Error.Conflict(
             code: "User.DuplicateEmail",
@@ -17,9 +19,13 @@ public static class DomainErrors
         public static Error LongerThanAllowed => Error.Validation(
             code: "Email.LongerThanAllowed",
             description: "The email is longer than allowed.");
+
+        public static Error InvalidFormat => Error.Validation(
+            code: "Email.InvalidFormat",
+            description: "The email format is invalid.");
     }
 
-    internal class FirstName
+    public static class FirstName
     {
         public static Error LongerThanAllowed => Error.Validation(
             code: "FirstName.LongerThanAllowed",
@@ -34,7 +40,7 @@ public static class DomainErrors
             description: "The first name is required.");
     }
 
-    internal class LastName
+    public static class LastName
     {
         public static Error LongerThanAllowed => Error.Validation(
             code: "LastName.LongerThanAllowed",
@@ -49,7 +55,7 @@ public static class DomainErrors
             description: "The last name is required.");
     }
 
-    internal class UserName
+    public static class UserName
     {
         public static Error LongerThanAllowed => Error.Validation(
             code: "UserName.LongerThanAllowed",
@@ -64,3 +70,4 @@ public static class DomainErrors
             description: "The username is required.");
     }
 }
+#pragma warning restore CA1034

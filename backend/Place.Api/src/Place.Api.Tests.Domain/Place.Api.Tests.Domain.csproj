@@ -28,7 +28,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Place.Api.Domain\Place.Api.Domain.csproj" />
-      <ProjectReference Include="..\src\Place.Api.Domain\Place.Api.Domain.csproj" />
     </ItemGroup>
 
 </Project>

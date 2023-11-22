@@ -1,7 +1,7 @@
-namespace Place.Api.Domain.Authentication;
+namespace Place.Api.Domain.Authentication.ValueObjects;
 
-using Common.Abstractions;
 using ErrorOr;
+using Place.Api.Domain.Common.Abstractions;
 
 /// <summary>
 /// Represents a user name.

@@ -1,7 +1,8 @@
-namespace Place.Api.Domain.Authentication;
+namespace Place.Api.Domain.Authentication.ValueObjects;
 
-using Common.Abstractions;
+using System.Net.Mail;
 using ErrorOr;
+using Place.Api.Domain.Common.Abstractions;
 
 /// <summary>
 /// Represents an email address.
@@ -37,6 +38,11 @@ public sealed class Email : ValueObject
             return DomainErrors.Email.NullOrEmpty;
         }
 
+        if (!IsValidEmail(value))
+        {
+            return DomainErrors.Email.InvalidFormat;
+        }
+
         if (value.Length > MaxLength)
         {
             return DomainErrors.Email.LongerThanAllowed;
@@ -52,5 +58,18 @@ public sealed class Email : ValueObject
     public override IEnumerable<object> GetEqualityComponents()
     {
         yield return this.Value;
+    }
+
+    public static bool IsValidEmail(string email)
+    {
+        try
+        {
+            MailAddress addr = new(email);
+            return addr.Address == email;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
     }
 }
