@@ -1,5 +1,6 @@
 namespace Place.Api.Tests.Domain.Authentication.ValueObjects;
 
+using System.Text;
 using Api.Domain.Authentication;
 using Api.Domain.Authentication.ValueObjects;
 using ErrorOr;
@@ -68,7 +69,12 @@ public class EmailTests
     public void CreateWithLongerValueThanAllowedReturnsError()
     {
         // Arrange
-        string value = new('a', Email.MaxLength + 1);
+        StringBuilder builder = new();
+
+        builder.Append("test")
+            .Append(new string('a', Email.MaxLength + 1))
+            .Append("@gmail.com");
+        string value = builder.ToString();
 
         // Act
         ErrorOr<Email> result = Email.Create(value);

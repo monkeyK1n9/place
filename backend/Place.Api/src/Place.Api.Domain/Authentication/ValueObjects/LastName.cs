@@ -6,7 +6,7 @@ using Place.Api.Domain.Common.Abstractions;
 /// <summary>
 /// Represents a first name.
 /// </summary>
-public class LastName : ValueObject
+public sealed class LastName : ValueObject
 {
     /// <summary>
     /// The maximum length of a last name.

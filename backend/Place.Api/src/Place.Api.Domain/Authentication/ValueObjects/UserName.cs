@@ -6,7 +6,7 @@ using Place.Api.Domain.Common.Abstractions;
 /// <summary>
 /// Represents a user name.
 /// </summary>
-public class UserName : ValueObject
+public sealed class UserName : ValueObject
 {
     /// <summary>
     /// The maximum length of a user name.
