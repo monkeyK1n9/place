@@ -23,17 +23,16 @@ public class DomainEventTests
     public void ClearDomainEventsShouldRemoveAllDomainEvents()
     {
         // Arrange
+        Entity<Guid>? entity1 = Substitute.For<Entity<Guid>>();
         IDomainEvent? domainEvent = Substitute.For<IDomainEvent>();
-        domainEvent.DomainEvents.Returns(new List<IDomainEvent>
-        {
-            Substitute.For<IDomainEvent>(), Substitute.For<IDomainEvent>()
-        });
 
+        entity1.AddDomainEvent(domainEvent);
+        entity1.AddDomainEvent(domainEvent);
         // Act
-        domainEvent.ClearDomainEvents();
+        entity1.ClearDomainEvents();
 
         // Assert
-        domainEvent.DomainEvents.Should().BeEmpty();
+        entity1.DomainEvents.Should().BeEmpty();
     }
 
     [Fact]
