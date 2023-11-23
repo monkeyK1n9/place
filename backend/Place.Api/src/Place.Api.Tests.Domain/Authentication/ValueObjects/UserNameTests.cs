@@ -65,4 +65,19 @@ public class UserNameTests
         result.IsError.Should().BeFalse();
         result.Value.Value.Should().Be(value);
     }
+
+
+    [Fact]
+    public void ToStringReturnsValue()
+    {
+        // Arrange
+        string value = "Uchiwa";
+        ErrorOr<UserName> email = UserName.Create(value);
+
+        // Act
+        string result = email.Value.ToString();
+
+        // Assert
+        result.Should().Be(value);
+    }
 }

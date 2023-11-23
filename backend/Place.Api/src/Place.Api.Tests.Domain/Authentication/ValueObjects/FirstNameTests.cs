@@ -64,4 +64,18 @@ public class FirstNameTests
         // Assert
         result.Value.Value.Should().Be(value);
     }
+
+    [Fact]
+    public void ToStringReturnsValue()
+    {
+        // Arrange
+        string value = "Sanix Darker";
+        ErrorOr<FirstName> email = FirstName.Create(value);
+
+        // Act
+        string result = email.Value.ToString();
+
+        // Assert
+        result.Should().Be(value);
+    }
 }

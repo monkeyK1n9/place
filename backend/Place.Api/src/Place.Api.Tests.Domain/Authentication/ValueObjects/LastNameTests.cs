@@ -6,7 +6,6 @@ using ErrorOr;
 using FluentAssertions;
 using Xunit;
 
-
 public class LastNameTests
 {
     private const int MaxLength = 256;
@@ -64,5 +63,19 @@ public class LastNameTests
 
         // Assert
         result.Value.Value.Should().Be(value);
+    }
+
+    [Fact]
+    public void ToStringReturnsValue()
+    {
+        // Arrange
+        string value = "Uchiwa";
+        ErrorOr<LastName> email = LastName.Create(value);
+
+        // Act
+        string result = email.Value.ToString();
+
+        // Assert
+        result.Should().Be(value);
     }
 }
