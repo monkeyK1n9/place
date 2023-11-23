@@ -1,5 +1,6 @@
 namespace Place.Api.Domain.Authentication.ValueObjects;
 
+using System.Collections.Generic;
 using ErrorOr;
 using Place.Api.Domain.Common.Abstractions;
 

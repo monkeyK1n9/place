@@ -1,5 +1,7 @@
 namespace Place.Api.Domain.Common.Abstractions;
 
+using System.Collections.Generic;
+
 /// <summary>
 /// Interface representing a domain event.
 /// </summary>

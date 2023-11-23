@@ -1,5 +1,7 @@
 namespace Place.Api.Tests.Domain.Common;
 
+using System;
+using System.Collections.Generic;
 using Api.Domain.Common.Abstractions;
 using FluentAssertions;
 using NSubstitute;

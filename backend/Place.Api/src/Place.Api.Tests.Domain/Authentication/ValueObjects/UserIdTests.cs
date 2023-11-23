@@ -1,5 +1,8 @@
 namespace Place.Api.Tests.Domain.Authentication.ValueObjects;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Api.Domain.Authentication.ValueObjects;
 using FluentAssertions;
 

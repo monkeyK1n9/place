@@ -5,8 +5,15 @@ using ErrorOr;
 public static class DomainErrors
 {
 #pragma warning disable CA1034
-    public static class Email
 
+    public static class User
+    {
+        public static Error CannotChangePassword => Error.Validation(
+            "User.CannotChangePassword",
+            "The password cannot be changed to the specified password.");
+    }
+
+    public static class Email
     {
         public static Error DuplicateEmail => Error.Conflict(
             code: "User.DuplicateEmail",

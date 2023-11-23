@@ -1,5 +1,8 @@
 namespace Place.Api.Domain.Common.Abstractions;
 
+using System;
+using System.Collections.Generic;
+
 /// <summary>
 /// Abstract class representing an entity.
 /// </summary>

@@ -1,5 +1,9 @@
 namespace Place.Api.Domain.Common.Abstractions;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 /// <summary>
 /// Abstract class representing a value object.
 /// </summary>

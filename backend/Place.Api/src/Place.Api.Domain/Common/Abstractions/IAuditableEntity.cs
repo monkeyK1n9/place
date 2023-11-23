@@ -1,5 +1,7 @@
 ﻿namespace Place.Api.Domain.Common.Abstractions;
 
+using System;
+
 /// <summary>
 /// Represents the marker interface for auditable entities.
 /// </summary>
