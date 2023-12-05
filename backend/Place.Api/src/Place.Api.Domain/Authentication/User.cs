@@ -11,6 +11,7 @@ public sealed class User : AggregateRoot<UserId, Ulid>
 {
     private string passwordHash;
 
+
     internal User(UserId id,
         UserName userName,
         Email email,
@@ -53,6 +54,8 @@ public sealed class User : AggregateRoot<UserId, Ulid>
     public FirstName? FirstName { get; private set; }
     public LastName? LastName { get; private set; }
 
+    public bool EmailIsConfirmed { get; private set; }
+
     public string FullName
         => GetFullName(this.FirstName, this.LastName);
 
@@ -74,6 +77,17 @@ public sealed class User : AggregateRoot<UserId, Ulid>
 
         return Result.Success;
     }
+
+    public void ChangeFirstName(FirstName? firstname)
+        => this.FirstName = firstname;
+
+    public void ChangeLastName(LastName? username)
+        => this.LastName = username;
+
+    public void ChangeUsername(UserName username)
+        => this.UserName = username;
+
+    public void ConfirmEmail() => this.EmailIsConfirmed = false;
 
     private static string GetFullName(FirstName? firstName, LastName? lastName)
     {
