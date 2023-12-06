@@ -1,4 +1,4 @@
-# Users
+    # Users
 
 Utilisez l’API REST pour obtenir des informations publiques et privées sur les utilisateurs authentifiés.
 
