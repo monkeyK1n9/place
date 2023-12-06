@@ -12,7 +12,7 @@ public sealed class FirstName : ValueObject
     /// <summary>
     /// The maximum length of a first name.
     /// </summary>
-    private const int MaxLength = 256;
+    public const int MaxLength = 256;
 
     /// <summary>
     /// The minimum length of a first name.

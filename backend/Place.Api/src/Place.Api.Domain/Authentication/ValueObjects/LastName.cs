@@ -12,7 +12,7 @@ public sealed class LastName : ValueObject
     /// <summary>
     /// The maximum length of a last name.
     /// </summary>
-    private const int MaxLength = 256;
+    public const int MaxLength = 256;
 
     /// <summary>
     /// The minimum length of a last name.
@@ -36,11 +36,11 @@ public sealed class LastName : ValueObject
     /// </summary>
     /// <param name="value">The value of the first name.</param>
     /// <returns>An instance of the <see cref="LastName"/> class or an error</returns>
-    public static ErrorOr<LastName> Create(string value)
+    public static ErrorOr<LastName> Create(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return DomainErrors.LastName.NullOrEmpty;
+            return null;
         }
 
         return value.Length switch

@@ -7,7 +7,7 @@ using ErrorOr;
 using Services;
 using ValueObjects;
 
-public sealed class User : AggregateRoot<UserId, Ulid>
+public sealed class User : AggregateRoot<UserId, Ulid>, IAuditableEntity, ISoftDeletableEntity
 {
     private string passwordHash;
 
@@ -40,6 +40,7 @@ public sealed class User : AggregateRoot<UserId, Ulid>
         this.LastName = lastName;
         this.Email = email;
         this.passwordHash = passwordHash;
+        this.CreatedOnUtc = DateTime.UtcNow;
     }
 
 #pragma warning disable CS8618
@@ -98,4 +99,9 @@ public sealed class User : AggregateRoot<UserId, Ulid>
 
         return builder.ToString();
     }
+
+    public DateTime CreatedOnUtc { get; }
+    public DateTime? ModifiedOnUtc { get; }
+    public DateTime? DeletedOnUtc { get; }
+    public bool Deleted { get; }
 }

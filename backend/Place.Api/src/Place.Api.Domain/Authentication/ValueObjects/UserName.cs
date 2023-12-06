@@ -12,12 +12,12 @@ public sealed class UserName : ValueObject
     /// <summary>
     /// The maximum length of a user name.
     /// </summary>
-    private const int MaxLength = 12;
+    public const int MaxLength = 12;
 
     /// <summary>
     /// The minimum length of a user name.
     /// </summary>
-    private const int MinLength = 5;
+    public const int MinLength = 5;
 
     /// <summary>
     /// Gets the value of the user name.
