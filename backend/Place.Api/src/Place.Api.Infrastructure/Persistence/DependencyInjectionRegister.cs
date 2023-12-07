@@ -13,8 +13,8 @@ public static class DependencyInjectionRegister
     {
         PostgresOptions options = configuration.GetOptions<PostgresOptions>(PostgresOptions.SettingsKey);
 
-        services.AddDbContext<UserReadDbContext>( context => context.UseNpgsql(options.ConnectionString));
-        services.AddDbContext<UserWriteDbContext>( context => context.UseNpgsql(options.ConnectionString));
+        services.AddDbContext<UserReadDbContext>(context => context.UseNpgsql(options.ConnectionString));
+        services.AddDbContext<UserWriteDbContext>(context => context.UseNpgsql(options.ConnectionString));
         services.AddScoped<SoftDeleteInterceptor>();
         services.AddScoped<UpdateAuditableEntitiesInterceptor>();
         return services;

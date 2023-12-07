@@ -10,7 +10,7 @@ using Domain.Common.Abstractions;
 /// This model includes user details and implements audit and soft delete functionality.
 /// It should be used only for read operations to ensure data integrity.
 /// </remarks>
-internal class UserReadModel : IAuditableEntity, ISoftDeletableEntity
+internal sealed class UserReadModel : IAuditableEntity, ISoftDeletableEntity
 {
     /// <summary>
     /// Gets or sets the unique identifier for the user.

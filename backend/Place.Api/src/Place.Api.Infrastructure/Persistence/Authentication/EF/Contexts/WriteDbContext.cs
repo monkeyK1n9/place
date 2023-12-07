@@ -4,7 +4,7 @@ using Domain.Authentication;
 using Interceptors;
 using Microsoft.EntityFrameworkCore;
 
-internal sealed class UserWriteDbContext(DbContextOptions<UserWriteDbContext> options,
+public sealed class UserWriteDbContext(DbContextOptions<UserWriteDbContext> options,
         UpdateAuditableEntitiesInterceptor updateAuditableEntitiesInterceptor,
         SoftDeleteInterceptor softDeleteInterceptor)
     : DbContext(options)

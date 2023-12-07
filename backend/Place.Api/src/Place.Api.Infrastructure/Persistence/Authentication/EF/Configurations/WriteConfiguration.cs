@@ -14,36 +14,35 @@ internal sealed class WriteConfiguration : IEntityTypeConfiguration<User>
         builder.ToTable(Database.Tables.UserTableName);
         builder.HasKey(user => user.Id);
 
-        ValueConverter<UserName, string> UserNameConverter = new ValueConverter<UserName, string>(
+        ValueConverter<UserName, string> userNameConverter = new(
             u => u.Value,
             u => UserName.Create(u).Value);
 
         builder.Property(user => user.UserName)
-            .HasConversion(UserNameConverter);
+            .HasConversion(userNameConverter);
 
-        ValueConverter<Email, string> EmailConverter = new ValueConverter<Email, string>(
+        ValueConverter<Email, string> emailConverter = new(
             u => u.Value,
             u => Email.Create(u).Value);
 
         builder.Property(user => user.Email)
             .IsRequired()
-            .HasConversion(UserNameConverter);
+            .HasConversion(emailConverter);
 
-        ValueConverter<FirstName, string> FirstNameConverter = new ValueConverter<FirstName, string>(
+        ValueConverter<FirstName, string> firstNameConverter = new(
             u => u.Value,
             u => FirstName.Create(u).Value);
 
         builder.Property(user => user.FirstName)
-            .HasConversion(FirstNameConverter!);
+            .HasConversion(firstNameConverter!);
 
 
-        ValueConverter<LastName, string> LastNameConverter = new ValueConverter<LastName, string>(
+        ValueConverter<LastName, string> lastnameConverter = new(
             u => u.Value,
             u => LastName.Create(u).Value);
 
         builder.Property(user => user.LastName)
-            .IsRequired(false)
-            .HasMaxLength(LastName.MaxLength);
+            .HasConversion(lastnameConverter!);
 
         builder.Property(user => user.EmailIsConfirmed);
 

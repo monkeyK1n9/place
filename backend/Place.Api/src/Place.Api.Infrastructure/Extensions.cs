@@ -7,7 +7,7 @@ public static class Extensions
     public static TOptions GetOptions<TOptions>(this IConfiguration configuration, string sectionName)
         where TOptions : new()
     {
-        TOptions? options = new TOptions();
+        TOptions? options = new();
         configuration.GetSection(sectionName).Bind(options);
         return options;
     }

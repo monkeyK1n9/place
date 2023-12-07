@@ -36,7 +36,7 @@ public sealed class LastName : ValueObject
     /// </summary>
     /// <param name="value">The value of the first name.</param>
     /// <returns>An instance of the <see cref="LastName"/> class or an error</returns>
-    public static ErrorOr<LastName> Create(string? value)
+    public static ErrorOr<LastName> Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {

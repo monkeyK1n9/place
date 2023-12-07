@@ -5,7 +5,7 @@ using System;
 /// <summary>
 /// Represents the settings required to configure the PostgreSQL database connection.
 /// </summary>
-internal class PostgresOptions
+internal sealed class PostgresOptions
 {
     /// <summary>
     /// Gets the key used to retrieve the PostgreSQL settings from the configuration file.
@@ -21,8 +21,9 @@ internal class PostgresOptions
     public string ConnectionString
     {
         get => this.connectionString;
-        set => this.connectionString = !string.IsNullOrWhiteSpace(value) ? value
-            : throw new ArgumentException("Connection string must not be null or empty.", nameof(this.ConnectionString));
+        set => this.connectionString = !string.IsNullOrWhiteSpace(value)
+            ? value
+            : throw new ArgumentException("Connection string must not be null or empty.",
+                nameof(this.ConnectionString));
     }
 }
-

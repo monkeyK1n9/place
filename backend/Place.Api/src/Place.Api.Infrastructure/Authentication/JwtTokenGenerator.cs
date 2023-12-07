@@ -1,6 +1,7 @@
 namespace Place.Api.Infrastructure.Authentication;
 
 using System;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -31,21 +32,21 @@ public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, JwtSettings j
     /// </remarks>
     public string GenerateToken(User user)
     {
-        SigningCredentials signingCredentials = new SigningCredentials(
+        SigningCredentials signingCredentials = new(
             new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtSettings.Secret)),
             SecurityAlgorithms.HmacSha256
         );
 
-        Claim[] claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()!),
-            new Claim(JwtRegisteredClaimNames.GivenName, user.UserName.Value),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email.Value),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        Debug.Assert(user != null!, nameof(user) + " != null");
+        Claim[] claims = {
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()!),
+            new(JwtRegisteredClaimNames.GivenName, user.UserName.Value),
+            new(JwtRegisteredClaimNames.Email, user.Email.Value),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        JwtSecurityToken securityToken = new JwtSecurityToken(
+        JwtSecurityToken securityToken = new(
             issuer: jwtSettings.Issuer,
             audience: jwtSettings.Audience,
             expires: dateTimeProvider.UtcNow.AddMinutes(jwtSettings.ExpiryInMinutes),

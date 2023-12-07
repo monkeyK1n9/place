@@ -12,7 +12,7 @@ public static class DependencyInjectionRegister
 {
     public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
-        JwtSettings jwtSettings = new JwtSettings();
+        JwtSettings jwtSettings = new();
         configuration.Bind(JwtSettings.SectionName, jwtSettings);
 
         services.AddSingleton(Options.Create(jwtSettings));

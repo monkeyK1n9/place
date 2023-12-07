@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9D7D0436
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place.Api.Tests.Domain", "src\Place.Api.Tests.Domain\Place.Api.Tests.Domain.csproj", "{DC19F107-F381-450D-993C-399049E5B1DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place.Api.Infrastructure", "Place.Api.Infrastructure\Place.Api.Infrastructure.csproj", "{766DB78B-1E23-4C2C-8CD2-81259727127E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place.Api.Infrastructure", "src\Place.Api.Infrastructure\Place.Api.Infrastructure.csproj", "{766DB78B-1E23-4C2C-8CD2-81259727127E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place.Api.Application", "src\Place.Api.Application\Place.Api.Application.csproj", "{C2429E21-C6F7-4AEA-8D7E-BB7E1BAA5161}"
 EndProject
