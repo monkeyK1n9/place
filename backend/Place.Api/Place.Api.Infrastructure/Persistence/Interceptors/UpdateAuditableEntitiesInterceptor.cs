@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 public sealed class UpdateAuditableEntitiesInterceptor
     : SaveChangesInterceptor
 {
+    /// <inheritdoc />
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
         DbContextEventData eventData,
         InterceptionResult<int> result,

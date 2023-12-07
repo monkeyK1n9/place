@@ -10,9 +10,25 @@ using Domain.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
+/// <summary>
+/// Provides functionality to generate JSON Web Token (JWT) for authentication purposes.
+/// </summary>
+/// <remarks>
+/// This class is responsible for creating JWTs based on the provided user information and JWT settings.
+/// It utilizes the System.IdentityModel.Tokens.Jwt library to construct and encode the token.
+/// </remarks>
 public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, JwtSettings jwtSettings)
     : IJwTokenGenerator
 {
+    /// <summary>
+    /// Generates a JWT for the specified user.
+    /// </summary>
+    /// <param name="user">The user for whom the token is being generated.</param>
+    /// <returns>A string representing the encoded JWT.</returns>
+    /// <remarks>
+    /// The token includes standard claims such as subject, given name, email, and a unique identifier.
+    /// The token's expiration is set based on the configured expiry time in minutes.
+    /// </remarks>
     public string GenerateToken(User user)
     {
         SigningCredentials signingCredentials = new SigningCredentials(
