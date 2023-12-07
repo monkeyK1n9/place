@@ -40,7 +40,7 @@ public sealed class LastName : ValueObject
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return null;
+            return DomainErrors.LastName.NullOrEmpty;
         }
 
         return value.Length switch

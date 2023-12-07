@@ -3,7 +3,7 @@ namespace Place.Api.Infrastructure.Persistence.Authentication.EF.Models;
 using System;
 using Domain.Common.Abstractions;
 
-public class UserReadModel : IAuditableEntity, ISoftDeletableEntity
+internal class UserReadModel : IAuditableEntity, ISoftDeletableEntity
 {
     public Ulid Id { get; set; }
     public string UserName { get; set; } = null!;

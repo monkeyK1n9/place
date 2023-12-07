@@ -37,7 +37,7 @@ internal sealed class WriteConfiguration : IEntityTypeConfiguration<User>
             .HasConversion(FirstNameConverter!);
 
 
-        ValueConverter<LastName, string>LastNameConverter = new ValueConverter<LastName, string>(
+        ValueConverter<LastName, string> LastNameConverter = new ValueConverter<LastName, string>(
             u => u.Value,
             u => LastName.Create(u).Value);
 
@@ -49,10 +49,9 @@ internal sealed class WriteConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(typeof(string), "passwordHash");
 
-        builder.Property(u => u.)
-
+        builder.Property(u => u.CreatedOnUtc);
+        builder.Property(u => u.ModifiedOnUtc);
         builder.Property(user => user.DeletedOnUtc);
         builder.Property(user => user.Deleted);
-
     }
 }

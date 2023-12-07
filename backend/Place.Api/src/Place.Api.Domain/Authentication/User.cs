@@ -101,7 +101,8 @@ public sealed class User : AggregateRoot<UserId, Ulid>, IAuditableEntity, ISoftD
     }
 
     public DateTime CreatedOnUtc { get; }
-    public DateTime? ModifiedOnUtc { get; }
-    public DateTime? DeletedOnUtc { get; }
-    public bool Deleted { get; }
+    public DateTime? ModifiedOnUtc { get; set; }
+    public bool Deleted { get; set; }
+    public DateTime? DeletedOnUtc { get; set; }
+
 }
