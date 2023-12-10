@@ -1,6 +1,6 @@
 namespace Place.Api.Infrastructure;
 
-using Application.Common.Cryptography;
+using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Services;
 using Authentication;
 using Cryptography;

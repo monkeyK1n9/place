@@ -3,7 +3,7 @@ namespace Place.Api.Infrastructure.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Application.Common.Cryptography;
+using Application.Common.Interfaces.Authentication;
 using Domain.Authentication.ValueObjects;
 using Domain.Services;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;

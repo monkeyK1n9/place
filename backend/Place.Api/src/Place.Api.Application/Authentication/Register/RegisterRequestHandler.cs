@@ -2,7 +2,6 @@ namespace Place.Api.Application.Authentication.Register;
 
 using System.Threading;
 using System.Threading.Tasks;
-using Common.Cryptography;
 using Common.Interfaces.Authentication;
 using Domain.Authentication;
 using Domain.Authentication.ValueObjects;

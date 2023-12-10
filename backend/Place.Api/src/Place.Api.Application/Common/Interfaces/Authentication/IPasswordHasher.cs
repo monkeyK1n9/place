@@ -1,6 +1,6 @@
-namespace Place.Api.Application.Common.Cryptography;
+namespace Place.Api.Application.Common.Interfaces.Authentication;
 
-using Domain.Authentication.ValueObjects;
+using Place.Api.Domain.Authentication.ValueObjects;
 
 /// <summary>
 /// Represents the password hasher interface.
