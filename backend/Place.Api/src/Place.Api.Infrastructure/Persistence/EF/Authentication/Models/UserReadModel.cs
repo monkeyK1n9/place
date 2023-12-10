@@ -1,7 +1,7 @@
-namespace Place.Api.Infrastructure.Persistence.Authentication.EF.Models;
+namespace Place.Api.Infrastructure.Persistence.EF.Authentication.Models;
 
 using System;
-using Domain.Common.Abstractions;
+using Place.Api.Domain.Common.Abstractions;
 
 /// <summary>
 /// Represents a read-only model of a user for querying purposes.
@@ -10,7 +10,7 @@ using Domain.Common.Abstractions;
 /// This model includes user details and implements audit and soft delete functionality.
 /// It should be used only for read operations to ensure data integrity.
 /// </remarks>
-internal sealed class UserReadModel : IAuditableEntity, ISoftDeletableEntity
+public sealed class UserReadModel : IAuditableEntity, ISoftDeletableEntity
 {
     /// <summary>
     /// Gets or sets the unique identifier for the user.

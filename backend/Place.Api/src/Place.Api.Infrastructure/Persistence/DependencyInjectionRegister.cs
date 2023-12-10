@@ -1,10 +1,12 @@
 namespace Place.Api.Infrastructure.Persistence;
 
+using Application.Common.Interfaces.Authentication;
+using EF.Authentication.Repositories;
+using EF.Contexts;
+using EF.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Place.Api.Infrastructure.Persistence.Authentication.EF.Contexts;
-using Place.Api.Infrastructure.Persistence.Authentication.EF.Options;
 using Place.Api.Infrastructure.Persistence.Interceptors;
 
 public static class DependencyInjectionRegister
@@ -13,10 +15,14 @@ public static class DependencyInjectionRegister
     {
         PostgresOptions options = configuration.GetOptions<PostgresOptions>(PostgresOptions.SettingsKey);
 
-        services.AddDbContext<UserReadDbContext>(context => context.UseNpgsql(options.ConnectionString));
-        services.AddDbContext<UserWriteDbContext>(context => context.UseNpgsql(options.ConnectionString));
+        services.AddDbContext<ReadDbContext>(context => context.UseNpgsql(options.ConnectionString));
+        services.AddDbContext<WriteDbContext>(context => context.UseNpgsql(options.ConnectionString));
+
         services.AddScoped<SoftDeleteInterceptor>();
         services.AddScoped<UpdateAuditableEntitiesInterceptor>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
+
         return services;
     }
 }

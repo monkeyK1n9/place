@@ -1,10 +1,11 @@
-namespace Place.Api.Infrastructure.Persistence.Authentication.EF.Contexts;
+namespace Place.Api.Infrastructure.Persistence.EF.Contexts;
 
-using Domain.Authentication;
-using Interceptors;
+using Authentication.Configurations;
 using Microsoft.EntityFrameworkCore;
+using Place.Api.Domain.Authentication;
+using Place.Api.Infrastructure.Persistence.Interceptors;
 
-public sealed class UserWriteDbContext(DbContextOptions<UserWriteDbContext> options,
+public sealed class WriteDbContext(DbContextOptions<WriteDbContext> options,
         UpdateAuditableEntitiesInterceptor updateAuditableEntitiesInterceptor,
         SoftDeleteInterceptor softDeleteInterceptor)
     : DbContext(options)
@@ -14,7 +15,9 @@ public sealed class UserWriteDbContext(DbContextOptions<UserWriteDbContext> opti
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
+        modelBuilder.HasDefaultSchema("user");
+        WriteConfiguration configuration = new WriteConfiguration();
+        modelBuilder.ApplyConfiguration(configuration);
 
         base.OnModelCreating(modelBuilder);
     }

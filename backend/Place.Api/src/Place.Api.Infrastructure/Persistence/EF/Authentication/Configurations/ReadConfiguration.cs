@@ -1,17 +1,21 @@
-namespace Place.Api.Infrastructure.Persistence.Authentication.EF.Configurations;
+namespace Place.Api.Infrastructure.Persistence.EF.Authentication.Configurations;
 
-using Constants;
-using Domain.Authentication.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Models;
+using Models.Converters;
+using Place.Api.Domain.Authentication.ValueObjects;
+using Place.Api.Infrastructure.Persistence.Constants;
 
 internal sealed class ReadConfiguration : IEntityTypeConfiguration<UserReadModel>
 {
     public void Configure(EntityTypeBuilder<UserReadModel> builder)
     {
         builder.ToTable(Database.Tables.UserTableName);
-        builder.HasKey(user => user.Id);
+
+        builder.Property(user => user.Id)
+            .HasConversion<UlidToStringConverter>();
+
 
         builder.Property(user => user.UserName)
             .IsRequired()
@@ -42,6 +46,8 @@ internal sealed class ReadConfiguration : IEntityTypeConfiguration<UserReadModel
 
         builder.Property(user => user.DeletedOnUtc);
         builder.Property(user => user.Deleted);
+
+        builder.HasKey(user => user.Id);
 
     }
 }

@@ -1,4 +1,4 @@
-namespace Place.Api.Infrastructure.Persistence.Authentication.EF.Options;
+namespace Place.Api.Infrastructure.Persistence.EF.Options;
 
 using System;
 

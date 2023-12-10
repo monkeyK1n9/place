@@ -1,18 +1,23 @@
-namespace Place.Api.Infrastructure.Persistence.Authentication.EF.Configurations;
+namespace Place.Api.Infrastructure.Persistence.EF.Authentication.Configurations;
 
 using Constants;
-using Domain.Authentication;
-using Domain.Authentication.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Models.Converters;
+using Place.Api.Domain.Authentication;
+using Place.Api.Domain.Authentication.ValueObjects;
 
 internal sealed class WriteConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable(Database.Tables.UserTableName);
         builder.HasKey(user => user.Id);
+
+        builder.ToTable(Database.Tables.UserTableName);
+
+        builder.Property(user => user.Id)
+            .HasConversion<UlidToUserIdConverter>();
 
         ValueConverter<UserName, string> userNameConverter = new(
             u => u.Value,
@@ -46,7 +51,7 @@ internal sealed class WriteConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(user => user.EmailIsConfirmed);
 
-        builder.Property(typeof(string), "passwordHash");
+        builder.Property(user => user.PasswordHash);
 
         builder.Property(u => u.CreatedOnUtc);
         builder.Property(u => u.ModifiedOnUtc);
