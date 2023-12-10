@@ -11,14 +11,14 @@ public static class DomainErrors
         public static Error CannotChangePassword => Error.Validation(
             "User.CannotChangePassword",
             "The password cannot be changed to the specified password.");
+
+        public static Error DuplicateEmail => Error.Conflict(
+            code: "User.DuplicateEmail",
+            description: "Email is already in use.");
     }
 
     public static class Email
     {
-        public static Error DuplicateEmail => Error.Conflict(
-            code: "User.DuplicateEmail",
-            description: "Email is already in use.");
-
         public static Error NullOrEmpty => Error.Validation(
             code: "Email.NullOrEmpty",
             description: "The email is required.");
@@ -75,6 +75,34 @@ public static class DomainErrors
         public static Error NullOrEmpty => Error.Validation(
             code: "UserName.NullOrEmpty",
             description: "The username is required.");
+    }
+
+    public static class Password
+    {
+        public static Error NullOrEmpty => Error.Validation(
+            code: "Password.NullOrEmpty",
+            description: "Password is required."
+        );
+
+        public static Error TooShort => Error.Validation(
+            code: "Password.TooShort",
+            description: "The password is too short.");
+
+        public static Error MissingUppercaseLetter => Error.Validation(
+            code: "Password.MissingUppercaseLetter",
+            description: "The password requires at least one uppercase letter.");
+
+        public static Error MissingLowercaseLetter => Error.Validation(
+            code: "Password.MissingLowercaseLetter",
+            description: "The password requires at least one lowercase letter.");
+
+        public static Error MissingDigit => Error.Validation(
+            code: "Password.MissingDigit",
+            description: "The password requires at least one digit.");
+
+        public static Error MissingNonAlphaNumeric => Error.Validation(
+            code: "Password.MissingNonAlphaNumeric",
+            description: "The password requires at least one non-alphanumeric.");
     }
 }
 #pragma warning restore CA1034
