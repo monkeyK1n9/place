@@ -8,6 +8,7 @@ using System.Text;
 using Application.Common.Interfaces.Authentication;
 using Application.Common.Interfaces.Services;
 using Domain.Authentication;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
@@ -18,9 +19,11 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 /// This class is responsible for creating JWTs based on the provided user information and JWT settings.
 /// It utilizes the System.IdentityModel.Tokens.Jwt library to construct and encode the token.
 /// </remarks>
-public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, JwtSettings jwtSettings)
+public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtOptions)
     : IJwTokenGenerator
 {
+    private readonly JwtSettings jwtSettings = jwtOptions.Value;
+
     /// <summary>
     /// Generates a JWT for the specified user.
     /// </summary>
@@ -34,7 +37,7 @@ public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, JwtSettings j
     {
         SigningCredentials signingCredentials = new(
             new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+                Encoding.UTF8.GetBytes(this.jwtSettings.Secret)),
             SecurityAlgorithms.HmacSha256
         );
 
@@ -47,9 +50,9 @@ public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, JwtSettings j
         };
 
         JwtSecurityToken securityToken = new(
-            issuer: jwtSettings.Issuer,
-            audience: jwtSettings.Audience,
-            expires: dateTimeProvider.UtcNow.AddMinutes(jwtSettings.ExpiryInMinutes),
+            issuer: this.jwtSettings.Issuer,
+            audience: this.jwtSettings.Audience,
+            expires: dateTimeProvider.UtcNow.AddMinutes(this.jwtSettings.ExpiryInMinutes),
             claims: claims,
             signingCredentials: signingCredentials
         );

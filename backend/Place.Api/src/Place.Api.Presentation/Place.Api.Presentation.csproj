@@ -16,10 +16,19 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Ardalis.ApiEndpoints" Version="4.1.0" />
+      <PackageReference Include="Mapster" Version="7.4.1-pre01" />
+      <PackageReference Include="Mapster.DependencyInjection" Version="1.0.2-pre01" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Place.Api.Application\Place.Api.Application.csproj" />
+      <ProjectReference Include="..\Place.Api.Domain\Place.Api.Domain.csproj" />
+      <ProjectReference Include="..\Place.Api.Infrastructure\Place.Api.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

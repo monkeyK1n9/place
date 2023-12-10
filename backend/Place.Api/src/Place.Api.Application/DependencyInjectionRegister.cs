@@ -8,9 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionRegister
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddMediatR(typeof(DependencyInjectionRegister).Assembly);
+        services.AddMediatR(cfg =>
+        {
+            cfg.Lifetime = ServiceLifetime.Scoped;
+            cfg.RegisterServicesFromAssembly(typeof(DependencyInjectionRegister).Assembly);
+        });
 
         services.AddScoped(
             typeof(IPipelineBehavior<,>),

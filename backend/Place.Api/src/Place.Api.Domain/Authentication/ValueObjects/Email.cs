@@ -33,25 +33,14 @@ public sealed class Email : ValueObject
     /// </summary>
     /// <param name="value">The email address.</param>
     /// <returns>An instance of the <see cref="Email"/> class or an error</returns>
-    public static ErrorOr<Email> Create(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
+    public static ErrorOr<Email> Create(string value) =>
+        value switch
         {
-            return DomainErrors.Email.NullOrEmpty;
-        }
-
-        if (!IsValidEmail(value))
-        {
-            return DomainErrors.Email.InvalidFormat;
-        }
-
-        if (value.Length > MaxLength)
-        {
-            return DomainErrors.Email.LongerThanAllowed;
-        }
-
-        return new Email(value);
-    }
+            null or "" => DomainErrors.Email.NullOrEmpty,
+            _ when !IsValidEmail(value) => DomainErrors.Email.InvalidFormat,
+            _ when value.Length > MaxLength => DomainErrors.Email.LongerThanAllowed,
+            _ => new Email(value)
+        };
 
     /// <inheritdoc />
     public override string ToString() => this.Value;
@@ -62,7 +51,7 @@ public sealed class Email : ValueObject
         yield return this.Value;
     }
 
-    public static bool IsValidEmail(string email)
+    private static bool IsValidEmail(string email)
     {
         try
         {

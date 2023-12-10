@@ -24,4 +24,9 @@
       <ProjectReference Include="..\Place.Api.Domain\Place.Api.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Persistence\EF\Authentication\" />
+      <Folder Include="Persistence\Migrations\" />
+    </ItemGroup>
+
 </Project>

@@ -18,10 +18,8 @@ public class ValidationBehavior<TRequest, TResponse> :
 
     public ValidationBehavior(IValidator<TRequest>? validator = null) => this.validator = validator;
 
-    public async Task<TResponse> Handle(
-        TRequest request,
-        CancellationToken cancellationToken,
-        RequestHandlerDelegate<TResponse> next)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
     {
         if (this.validator is null)
         {
@@ -29,7 +27,9 @@ public class ValidationBehavior<TRequest, TResponse> :
             return await next().ConfigureAwait(true);
         }
 
-        ValidationResult? validationResult = await this.validator.ValidateAsync(request, cancellationToken).ConfigureAwait(false);
+        ValidationResult? validationResult = await this.validator
+            .ValidateAsync(request, cancellationToken)
+            .ConfigureAwait(false);
 
         if (validationResult.IsValid)
         {
@@ -40,5 +40,6 @@ public class ValidationBehavior<TRequest, TResponse> :
         List<Error> errors = validationResult.Errors.ConvertAll(validationFailure =>
             Error.Validation(validationFailure.PropertyName, validationFailure.ErrorMessage));
         return (dynamic)errors;
+
     }
 }
