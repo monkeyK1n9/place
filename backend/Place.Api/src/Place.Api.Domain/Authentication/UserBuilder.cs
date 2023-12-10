@@ -3,7 +3,10 @@ namespace Place.Api.Domain.Authentication;
 using System;
 using Place.Api.Domain.Authentication.ValueObjects;
 
-public sealed class UserBuilder(Email email, string passwordHash)
+/// <summary>
+/// Builder for creating instances of the <see cref="User"/> class.
+/// </summary>
+public sealed class UserBuilder
 {
     private UserName userName = null!;
     private FirstName? firstName;
@@ -12,6 +15,8 @@ public sealed class UserBuilder(Email email, string passwordHash)
     /// <summary>
     /// Sets the <see cref="UserName"/> property and returns the current instance of <see cref="UserBuilder"/>.
     /// </summary>
+    /// <param name="value">The <see cref="UserName"/> for the user.</param>
+    /// <returns>The current instance of <see cref="UserBuilder"/>.</returns>
     public UserBuilder WithUserName(UserName value)
     {
         this.userName = value;
@@ -21,6 +26,8 @@ public sealed class UserBuilder(Email email, string passwordHash)
     /// <summary>
     /// Sets the <see cref="FirstName"/> property and returns the current instance of <see cref="UserBuilder"/>.
     /// </summary>
+    /// <param name="value">The <see cref="FirstName"/> for the user.</param>
+    /// <returns>The current instance of <see cref="UserBuilder"/>.</returns>
     public UserBuilder WithFirstName(FirstName value)
     {
         this.firstName = value;
@@ -30,6 +37,8 @@ public sealed class UserBuilder(Email email, string passwordHash)
     /// <summary>
     /// Sets the <see cref="LastName"/> property and returns the current instance of <see cref="UserBuilder"/>.
     /// </summary>
+    /// <param name="value">The <see cref="LastName"/> for the user.</param>
+    /// <returns>The current instance of <see cref="UserBuilder"/>.</returns>
     public UserBuilder WithLastName(LastName value)
     {
         this.lastName = value;
@@ -37,14 +46,17 @@ public sealed class UserBuilder(Email email, string passwordHash)
     }
 
     /// <summary>
-    /// Returns a new instance of <see cref="User"/> with the properties set on the <see cref="UserBuilder"/> instance.
+    /// Builds and returns a new instance of <see cref="User"/> with the properties set on the <see cref="UserBuilder"/> instance.
     /// </summary>
-    public User Build()
+    /// <param name="email">The email address for the user.</param>
+    /// <param name="passwordHash">The hashed password for the user.</param>
+    /// <returns>A new instance of <see cref="User"/>.</returns>
+    public User Build(Email email, string passwordHash)
     {
         ArgumentNullException.ThrowIfNull(this.userName);
 
-
-        return new(
+        return new User(
+            UserId.CreateUnique(),
             this.userName,
             email,
             passwordHash,
