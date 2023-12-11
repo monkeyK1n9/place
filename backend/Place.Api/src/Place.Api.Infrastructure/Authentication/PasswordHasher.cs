@@ -1,12 +1,12 @@
-namespace Place.Api.Infrastructure.Cryptography;
+namespace Place.Api.Infrastructure.Authentication;
 
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Application.Common.Interfaces.Authentication;
-using Domain.Authentication.ValueObjects;
-using Domain.Services;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Place.Api.Application.Common.Interfaces.Authentication;
+using Place.Api.Domain.Authentication.ValueObjects;
+using Place.Api.Domain.Services;
 
 /// <summary>
 /// Represents the password hasher, used for hashing passwords and verifying hashed passwords.

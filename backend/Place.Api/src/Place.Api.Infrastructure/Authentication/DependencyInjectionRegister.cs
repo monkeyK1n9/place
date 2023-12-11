@@ -8,14 +8,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
+/// <summary>
+/// Provides extension methods for registering authentication-related services in the dependency injection container.
+/// </summary>
 public static class DependencyInjectionRegister
 {
+    /// <summary>
+    /// Adds authentication-related services to the dependency injection container.
+    /// </summary>
+    /// <param name="services">The service collection to add services to.</param>
+    /// <param name="configuration">The configuration instance.</param>
+    /// <returns>The modified service collection.</returns>
     public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
         JwtSettings jwtSettings = new();
         configuration.Bind(JwtSettings.SectionName, jwtSettings);
 
         services.AddSingleton(Options.Create(jwtSettings));
+
         services.AddSingleton<IJwTokenGenerator, JwtTokenGenerator>();
 
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
