@@ -26,7 +26,7 @@ public record RegisterResult
     /// <summary>
     /// Gets or sets the unique identifier of the registered user.
     /// </summary>
-    public Ulid Id { get; set; }
+    public string Id { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RegisterResult"/> class based on a user entity.
@@ -34,7 +34,7 @@ public record RegisterResult
     /// <param name="user">The user entity from which to create the result.</param>
     public RegisterResult(User user)
     {
-        this.Id = user.Id.Value;
+        this.Id = user.Id.Value.ToString();
         this.Login = user.Email.Value;
         this.Username = user.UserName.Value;
         this.EmailIsConfirmed = user.EmailIsConfirmed;

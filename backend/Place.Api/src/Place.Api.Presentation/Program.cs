@@ -26,6 +26,7 @@ WebApplication app = builder.Build();
     app.MapControllers();
 
     app.UseRouting();
+    app.UseInfrastructure();
 
     if (app.Environment.IsDevelopment())
     {

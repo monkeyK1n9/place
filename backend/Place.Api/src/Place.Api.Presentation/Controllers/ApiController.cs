@@ -56,4 +56,8 @@ public class ApiController : ControllerBase
 
         return this.ValidationProblem(modelStateDictionary);
     }
+
+
+    protected IActionResult Created(object objectResult)
+        => new ObjectResult(objectResult) { StatusCode = StatusCodes.Status201Created};
 }
