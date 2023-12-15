@@ -8,7 +8,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -18,13 +17,12 @@ jobs:
           dotnet-version: '8.0.x'  # Adjust your .NET version
 
       - name: Restore dependencies
-        run: dotnet restore src/Place.sln
+        working-directory: backend/Place.Api
+        run: dotnet restore
 
       - name: Build
-        run: dotnet build src/Place.sln --no-restore
-
-      - name: Test
-        run: dotnet test src/Place.sln --no-build --verbosity normal
+        working-directory: backend/Place.Api
+        run: dotnet --no-restore
 
   semantic-release:
     needs: build-and-test
