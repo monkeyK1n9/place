@@ -7,7 +7,6 @@ using Endpoints;
 using ErrorOr;
 using MapsterMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 

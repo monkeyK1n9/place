@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Place.Api.Application;
 using Place.Api.Infrastructure;
 using Place.Api.Presentation;
-using Place.Api.Presentation.Errors;
-using Place.Api.Presentation.Mappings;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
