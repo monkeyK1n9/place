@@ -22,7 +22,7 @@ jobs:
 
       - name: Build
         working-directory: backend/Place.Api
-        run: dotnet --no-restore
+        run: dotnet build --no-restore
 
   semantic-release:
     needs: build-and-test
