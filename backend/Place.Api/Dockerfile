@@ -22,7 +22,7 @@ FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-alpine as final
 
 EXPOSE  5000
 
-ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_URLS=http://+:5000;
 
 RUN  apk add curl vim
 
