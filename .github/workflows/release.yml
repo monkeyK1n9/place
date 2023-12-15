@@ -10,38 +10,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'  # Adjust your .NET version
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'  # Adjust your .NET version
 
-    - name: Restore dependencies
-      run: dotnet restore src/Place.sln
+      - name: Restore dependencies
+        run: dotnet restore src/Place.sln
 
-    - name: Build
-      run: dotnet build src/Place.sln --no-restore
+      - name: Build
+        run: dotnet build src/Place.sln --no-restore
 
-    - name: Test
-      run: dotnet test src/Place.sln --no-build --verbosity normal
+      - name: Test
+        run: dotnet test src/Place.sln --no-build --verbosity normal
 
   semantic-release:
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Important for semantic-release to analyze commits
-    - name: Run semantic-release
-    - uses: cycjimmy/semantic-release-action@v4
-      with:
-        extra_plugins: |
-          @semantic-release/commit-analyzer
-          @semantic-release/release-notes-generator
-          @semantic-release/git
-          @semantic-release/exec
-          @semantic-release/changelog 
-      env:
-        GITHUB_TOKEN: ${{ secrets.PLACE_GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Important for semantic-release to analyze commits
+
+      - name: Run semantic-release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          extra_plugins: |
+            @semantic-release/commit-analyzer
+            @semantic-release/release-notes-generator
+            @semantic-release/git
+            @semantic-release/exec
+            @semantic-release/changelog 
+        env:
+          GITHUB_TOKEN: ${{ secrets.PLACE_GITHUB_TOKEN }}
