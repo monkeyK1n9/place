@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  oss-place-api-dotnet:
+    container_name: ${DOTNET_CONTAINER_NAME}
+    build:
+      context: .
+    expose:
+      - ${DOTNET_CONTAINER_PORT}
+    volumes:
+      - ./dotnetapp-data:/app/data
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      Postgres__ConnectionString: "Server=${POSTGRES_CONTAINER_NAME};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};User Id=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"
+      JwtSettings__Secret: ${JWTSETTINGS_SECRET}
+      JwtSettings__ExpiryMinutes: ${JWTSETTINGS_EXPIRYMINUTES}
+      JwtSettings__Issuer: ${JWTSETTINGS_ISSUER}
+      JwtSettings__Audience: ${JWTSETTINGS_AUDIENCE}
+      Swagger__enabled: ${SWAGGER_ENABLED}
+      Swagger__title: ${SWAGGER_TITLE}
+      Swagger__version: ${SWAGGER_VERSION}
+      Swagger__route: ${SWAGGER_ROUTE}
+  
+  oss-postgres-database:
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    image: postgres:16-alpine3.19
+    expose:
+      - ${POSTGRES_PORT}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    depends_on:
+      - ${DOTNET_CONTAINER_NAME}
+
+  oss-pgadmin:
+    container_name: ${PGADMIN_CONTAINER_NAME}
+    image: dpage/pgadmin4:8.1
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: "${PGADMIN_PORT}"
+    expose:
+      - "${PGADMIN_PORT}"
+    depends_on:
+      - ${POSTGRES_CONTAINER_NAME}
+
+  oss-frontend-nginx:
+    image: nginx:1.25.3-alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - ${DOTNET_CONTAINER_NAME}
+    ports:
+      - "80:80"
