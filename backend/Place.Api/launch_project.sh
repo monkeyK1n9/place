@@ -14,7 +14,7 @@ ask() {
 
 echo ""
 
-# Demander à l'utilisateur de fournir des valeurs pour les variables d'environnement
+# Ask for the values of the environment variables
 ASPNETCORE_ENVIRONMENT=$(ask "Enter ASP .NET Environment" "Development")
 JWTSETTINGS_SECRET=$(ask "Enter JWT Secret" "OnceUponATimePlaceDb")
 JWTSETTINGS_EXPIRYMINUTES=$(ask "Enter JWT Expiry Minutes" "300")
@@ -65,7 +65,7 @@ update_hosts() {
     done
 }
 
-# Créer ou mettre à jour le fichier .env
+# Create .env file
 cat <<EOF > .env
 ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT
 JWTSETTINGS_SECRET=$JWTSETTINGS_SECRET

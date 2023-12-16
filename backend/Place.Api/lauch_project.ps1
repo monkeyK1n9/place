@@ -12,7 +12,7 @@ function Ask($prompt, $default) {
 
 Write-Host ""
 
-# Demander les valeurs des variables d'environnement
+# Ask for the values of the environment variables
 $JWTSETTINGS_SECRET = Ask "Enter JWT Secret" "OnceUponATimePlaceDb"
 $JWTSETTINGS_EXPIRYMINUTES = Ask "Enter JWT Expiry Minutes" "300"
 $JWTSETTINGS_ISSUER = Ask "Enter JWT Issuer" "PlaceApi")
@@ -35,7 +35,7 @@ $PGADMIN_PORT = Ask "PgAdmin Port" "8005")
 
 Write-Host ""
 
-# Demander les adresses de domaine pour le fichier hosts
+# Ask for domain addresses for the hosts file
 Function Ask-For-Hosts {
     $OSS_PLACE_API = Ask "Enter the domain for oss-place-api.com" "oss-place-api.com"
     $WWW_OSS_PLACE_API = Ask "Enter the domain for www.oss-place-api.com" "www.oss-place-api.com"
@@ -65,7 +65,7 @@ Function Update-Hosts {
 }
 
 
-# Créer le fichier .env
+# Create .env file
 @"
 JWTSETTINGS_SECRET=$JWTSETTINGS_SECRET
 JWTSETTINGS_EXPIRYMINUTES=$JWTSETTINGS_EXPIRYMINUTES
@@ -109,7 +109,7 @@ Write-Host ""
 Write-Host "Virtuals hosts set."
 Write-Host ""
 
-# Lancer Docker Compose
+# Lauch Docker Compose
 Write-Host "Environment variables set. Launching Docker Compose..."
 
 Write-Host ""
