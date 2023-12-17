@@ -26,7 +26,6 @@ public class UserRepository(ReadDbContext readDbContext, WriteDbContext writeDbC
             .ConfigureAwait(true);
     }
 
-<<<<<<< HEAD
     /// <inheritdoc/>
     public async Task<User?> GetByEmail(string email)
     {
@@ -47,14 +46,5 @@ public class UserRepository(ReadDbContext readDbContext, WriteDbContext writeDbC
             )
             .WithId(UserId.Create(user.Id))
             .Build();
-=======
-    public User GetByEmail(Email email)
-    {
-        string property = "Email";
-
-        User user = this.users.FromSql($"SELECT * FROM users WHERE {property} = {email}").ToArray()[0];
-
-        return user;
->>>>>>> de20e6a (create reset password route and forgot password commands)
     }
 }
