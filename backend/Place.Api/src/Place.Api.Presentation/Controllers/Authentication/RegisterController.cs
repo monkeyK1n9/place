@@ -1,23 +1,24 @@
-namespace Place.Api.Presentation.Controllers;
+namespace Place.Api.Presentation.Controllers.Authentication;
 
 using System.Net.Mime;
-using Application.Authentication.Register;
-using Contrats.Authentication;
-using Endpoints;
 using ErrorOr;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Place.Api.Application.Authentication.Register;
+using Place.Api.Presentation.Contracts.Authentication;
+using Place.Api.Presentation.Endpoints;
 using Swashbuckle.AspNetCore.Annotations;
 
-public class AuthenticationController(ISender sender, IMapper mapper) : ApiController
+public class RegisterController(ISender sender, IMapper mapper) : ApiController
 {
 
     [HttpPost(ApiRoutes.Register.Endpoint)]
     [SwaggerOperation(
         Summary = ApiRoutes.Register.Summary,
         Description = ApiRoutes.Register.Description,
-        OperationId = ApiRoutes.Register.OperationId
+        OperationId = ApiRoutes.Register.OperationId,
+        Tags = new[] { "Authentication"}
     )]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]

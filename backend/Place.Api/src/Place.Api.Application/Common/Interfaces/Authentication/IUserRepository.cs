@@ -1,6 +1,7 @@
 namespace Place.Api.Application.Common.Interfaces.Authentication;
 
 using System.Threading.Tasks;
+using Application.Authentication.Login;
 using Domain.Authentication;
 using Domain.Authentication.ValueObjects;
 
@@ -22,4 +23,11 @@ public interface IUserRepository
     /// <param name="user">The user to add to the repository.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     Task AddAsync(User user);
+
+    /// <summary>
+    /// Get user by email.
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns><see cref="User"/> or null</returns>
+    Task<User?> GetByEmail(string email);
 }

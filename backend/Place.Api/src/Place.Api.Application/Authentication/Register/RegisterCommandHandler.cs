@@ -8,12 +8,12 @@ using Domain.Authentication.ValueObjects;
 using ErrorOr;
 using MediatR;
 
-public sealed class RegisterRequestHandler : IRequestHandler<RegisterCommand, ErrorOr<RegisterResult>>
+public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<RegisterResult>>
 {
     private readonly IUserRepository userRepository;
     private readonly IPasswordHasher passwordHasher;
 
-    public RegisterRequestHandler(IUserRepository userRepository, IPasswordHasher passwordHasher)
+    public RegisterCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher)
     {
         this.userRepository = userRepository;
         this.passwordHasher = passwordHasher;
@@ -47,12 +47,11 @@ public sealed class RegisterRequestHandler : IRequestHandler<RegisterCommand, Er
         {
             return password.FirstError;
         }
+
         string passwordHash = this.passwordHasher.HashPassword(password.Value);
 
-        UserBuilder builder = new UserBuilder();
+        User user = new UserBuilder(username.Value, email.Value, passwordHash).Build();
 
-        builder.WithUserName(username.Value);
-        User user = builder.Build(email.Value, passwordHash);
 
         await this.userRepository.AddAsync(user).ConfigureAwait(true);
 

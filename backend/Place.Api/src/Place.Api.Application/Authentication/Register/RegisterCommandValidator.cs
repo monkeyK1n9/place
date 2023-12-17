@@ -2,9 +2,9 @@ namespace Place.Api.Application.Authentication.Register;
 
 using FluentValidation;
 
-public class RegisterRequestValidator : AbstractValidator<RegisterCommand>
+public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
-    public RegisterRequestValidator()
+    public RegisterCommandValidator()
     {
         this.RuleFor(x => x.Email).NotEmpty().EmailAddress();
         this.RuleFor(x => x.Password).NotEmpty().MinimumLength(8);

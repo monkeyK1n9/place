@@ -1,0 +1,7 @@
+@base_url = http://localhost:5056
+@email = genjiru37@gmail.com
+@token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJQbGFjZS5BcGkuRG9tYWluLkF1dGhlbnRpY2F0aW9uLlZhbHVlT2JqZWN0cy5Vc2VySWQiLCJnaXZlbl9uYW1lIjoiam9obmRvZTVDREMiLCJlbWFpbCI6ImpvaG5kb2VAZ21haWwuY29tIiwianRpIjoiZmZhZDUwZDUtNGM0NS00ZGZjLThjMGUtM2I1MDQ5MzQ5MWVmIiwiZXhwIjoxNzAyODE3NzIyLCJpc3MiOiJsb2NhbGhvc3QiLCJhdWQiOiJsb2NhbGhvc3QifQ.w3EfF3X1uwzSsHuaiOukugsKOtwCs_UIwNR2m64jzrQ"
+
+GET http://localhost:5056/protected
+Authorization: Bearer {{token}}
+Content-Type: application/json

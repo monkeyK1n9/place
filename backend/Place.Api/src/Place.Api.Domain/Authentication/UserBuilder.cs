@@ -1,6 +1,5 @@
 namespace Place.Api.Domain.Authentication;
 
-using System;
 using Place.Api.Domain.Authentication.ValueObjects;
 
 /// <summary>
@@ -8,9 +7,27 @@ using Place.Api.Domain.Authentication.ValueObjects;
 /// </summary>
 public sealed class UserBuilder
 {
-    private UserName userName = null!;
+    private UserName userName;
+    private Email email;
+    private string password;
     private FirstName? firstName;
     private LastName? lastName;
+    private UserId? userId;
+
+
+    public UserBuilder(UserName userName, Email email, string passwordHash)
+    {
+        this.userName = userName;
+        this.email = email;
+        this.password = passwordHash;
+    }
+
+
+    public UserBuilder WithId(UserId id)
+    {
+        this.userId = id;
+        return this;
+    }
 
     /// <summary>
     /// Sets the <see cref="UserName"/> property and returns the current instance of <see cref="UserBuilder"/>.
@@ -48,20 +65,14 @@ public sealed class UserBuilder
     /// <summary>
     /// Builds and returns a new instance of <see cref="User"/> with the properties set on the <see cref="UserBuilder"/> instance.
     /// </summary>
-    /// <param name="email">The email address for the user.</param>
-    /// <param name="passwordHash">The hashed password for the user.</param>
     /// <returns>A new instance of <see cref="User"/>.</returns>
-    public User Build(Email email, string passwordHash)
-    {
-        ArgumentNullException.ThrowIfNull(this.userName);
-
-        return new User(
-            UserId.CreateUnique(),
+    public User Build() =>
+        new(
+            this.userId?? UserId.CreateUnique(),
             this.userName,
-            email,
-            passwordHash,
+            this.email,
+            this.password,
             this.firstName,
             this.lastName
         );
-    }
 }

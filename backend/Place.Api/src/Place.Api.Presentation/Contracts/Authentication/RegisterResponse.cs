@@ -1,4 +1,4 @@
-namespace Place.Api.Presentation.Contrats.Authentication;
+namespace Place.Api.Presentation.Contracts.Authentication;
 
 public sealed record RegisterResponse(
     string Id,

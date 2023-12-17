@@ -20,15 +20,9 @@ WebApplication app = builder.Build();
 {
     app.UseExceptionHandler("/error");
     app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.MapControllers();
-
-    app.UseRouting();
     app.UseInfrastructure();
-
-    if (app.Environment.IsDevelopment())
-    {
-        app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
-            string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
-    }
     app.Run();
 }
