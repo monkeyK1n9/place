@@ -1,5 +1,7 @@
 namespace Place.Api.Infrastructure.Persistence.EF.Authentication.Repositories;
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -21,5 +23,14 @@ public class UserRepository(WriteDbContext context) : IUserRepository
         await context
             .SaveChangesAsync()
             .ConfigureAwait(true);
+    }
+
+    public User GetByEmail(Email email)
+    {
+        string property = "Email";
+
+        User user = this.users.FromSql($"SELECT * FROM users WHERE {property} = {email}").ToArray()[0];
+
+        return user;
     }
 }

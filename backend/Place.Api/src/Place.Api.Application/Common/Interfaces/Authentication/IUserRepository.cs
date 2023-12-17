@@ -28,5 +28,5 @@ public interface IUserRepository
     /// </summary>
     /// <param name="email">The user's email be used to get the user from the repository.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    Task<User> GetAsync(Email email);
+    Task<User> GetByEmail(Email email);
 }

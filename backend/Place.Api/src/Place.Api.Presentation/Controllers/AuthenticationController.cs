@@ -67,4 +67,38 @@ public class AuthenticationController(ISender sender, IMapper mapper) : ApiContr
             errors => this.Problem(errors)
         );
     }
+
+    [HttpPost(ApiRoutes.VerifyOTP.Endpoint)]
+    [SwaggerOperation(
+        Summary = ApiRoutes.VerifyOTP.Summary,
+        Description = ApiRoutes.VerifyOTP.Description,
+    )]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [SwaggerResponse(StatusCodes.Status201Created, ApiRoutes.VerifyOTP.SuccessMessage, typeof(VerifyOTPResponse))]
+    public async Task<IActionResult> VerifyOTP(VerifyOTPRequest request, CancellationToken cancellationToken
+    )
+    {
+        // TODO: Implement this controller
+    }
+
+    [HttpPost(ApiRoutes.ResetPassword.Endpoint)]
+    [SwaggerOperation(
+        Summary = ApiRoutes.ResetPassword.Summary,
+        Description = ApiRoutes.ResetPassword.Description,
+    )]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [SwaggerResponse(StatusCodes.Status201Created, ApiRoutes.ResetPassword.SuccessMessage, typeof(ResetPasswordResponse))]
+    public async Task<IActionResult> ResetPassword(ResetPasswordRequest request, CancellationToken cancellationToken
+    )
+    {
+        // TODO: Implement this controller
+    }
 }
