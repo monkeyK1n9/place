@@ -1,4 +1,4 @@
-namespace Place.Api.Presentation.Contrats.Authentication;
+namespace Place.Api.Presentation.Contracts.Authentication;
 
 /// <summary>
 /// Represents the request payload for user registration.

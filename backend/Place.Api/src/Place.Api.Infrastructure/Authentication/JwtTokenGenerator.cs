@@ -43,16 +43,15 @@ public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtS
 
         Debug.Assert(user != null!, nameof(user) + " != null");
         Claim[] claims = {
-            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()!),
+            new(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
             new(JwtRegisteredClaimNames.GivenName, user.UserName.Value),
             new(JwtRegisteredClaimNames.Email, user.Email.Value),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
-
         JwtSecurityToken securityToken = new(
             issuer: this.jwtSettings.Issuer,
             audience: this.jwtSettings.Audience,
-            expires: dateTimeProvider.UtcNow.AddMinutes(this.jwtSettings.ExpiryInMinutes),
+            expires: dateTimeProvider.UtcNow.AddYears(2),
             claims: claims,
             signingCredentials: signingCredentials
         );
