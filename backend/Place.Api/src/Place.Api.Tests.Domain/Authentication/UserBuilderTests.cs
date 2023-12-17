@@ -21,7 +21,7 @@ public class UserBuilderTests
         this.lastName = LastName.Create("Uchiwa").Value;
         this.email = Email.Create("itachiuchiwa@gmail.com").Value;
         this.passwordHash = "hashedPassword";
-        this.userBuilder = new UserBuilder();
+        this.userBuilder = new UserBuilder(this.userName, this.email, this.passwordHash);
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class UserBuilderTests
         this.userBuilder.WithFirstName(this.firstName);
         this.userBuilder.WithLastName(this.lastName);
 
-        User result = this.userBuilder.Build(this.email, this.passwordHash);
+        User result = this.userBuilder.Build();
 
         result.Should().NotBeNull();
         result.Should().BeOfType<User>();
