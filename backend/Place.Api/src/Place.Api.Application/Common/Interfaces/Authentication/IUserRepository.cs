@@ -22,4 +22,11 @@ public interface IUserRepository
     /// <param name="user">The user to add to the repository.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     Task AddAsync(User user);
+
+    /// <summary>
+    /// Gets a user from the repository.
+    /// </summary>
+    /// <param name="email">The user's email be used to get the user from the repository.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    Task<User> GetAsync(Email email);
 }
