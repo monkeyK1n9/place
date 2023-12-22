@@ -17,12 +17,28 @@ public record SendOTPRequest
 }
 
 /// <summary>
+/// Represents the request payload to verify versus the otp sent by mail and stored in database.
+/// </summary>
+/// <remarks>
+/// Use this payload to verify it is the actual user changing the password.
+/// </remarks>
+public record VerifyOTPRequest
+{
+    /// <summary>
+    /// OTP sent by mail.
+    /// </summary>
+    /// <example>johndoe@gmail.com</example>
+    public string OTP { get; init; } = null!;
+
+}
+
+/// <summary>
 /// Represents the request payload to change user password.
 /// </summary>
 /// <remarks>
 /// Use this payload change the password of the user.
 /// </remarks>
-public record OTPVerificationRequest
+public record ResetPasswordRequest
 {
     /// <summary>
     /// New password for the user.

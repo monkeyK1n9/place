@@ -39,7 +39,7 @@ public sealed class ForgotPasswordRequestHandler : IRequestHandler<ForgotPasswor
         bool otpSent = SendRecoveryMail(email.Value);
 
         User user = await this.userRepository
-            .GetAsync(email.Value)
+            .GetByEmail(email.Value)
             .ConfigureAwait(false);
 
         return new SendOTPResult(otpSent);

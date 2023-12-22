@@ -55,6 +55,9 @@ internal sealed class ReadConfiguration : IEntityTypeConfiguration<UserReadModel
     {
         builder.ToTable(Database.Tables.UserOTPTableName);
 
+        builder.Property(userOTP => userOTP.Id)
+            .HasConversion<UlidToStringConverter>();
+
         builder.Property(userOTP => userOTP.UserId)
             .HasConversion<UlidToStringConverter>()
             .IsRequired();
@@ -68,6 +71,6 @@ internal sealed class ReadConfiguration : IEntityTypeConfiguration<UserReadModel
         builder.Property(userOTP => userOTP.DeletedOnUtc);
         builder.Property(userOTP => userOTP.Deleted);
 
-        builder.HasKey(userOTP => userOTP.UserId);
+        builder.HasKey(userOTP => userOTP.Id);
     }
 }
