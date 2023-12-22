@@ -9,7 +9,7 @@ using Place.Api.Application.Authentication.Register;
 /// </summary>
 public record ForgotPasswordCommand(
     string Email
-);
+) : IRequest<ErrorOr<SendOTPResult>>;
 
 /// <summary>
 /// Represents a command to validate the new password change

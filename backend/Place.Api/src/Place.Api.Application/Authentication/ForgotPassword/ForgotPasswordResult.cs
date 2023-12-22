@@ -1,6 +1,6 @@
 ﻿namespace Place.Api.Application;
 
-using Place.Api.Domain.Authentication;
+using Domain.Authentication;
 
 public record SendOTPResult
 {
