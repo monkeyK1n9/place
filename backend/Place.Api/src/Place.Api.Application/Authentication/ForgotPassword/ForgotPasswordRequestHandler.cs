@@ -3,11 +3,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Place.Api.Application.Common.Interfaces.Authentication;
-using Place.Api.Domain.Authentication.ValueObjects;
+using Common.Interfaces.Authentication;
+using Domain.Authentication;
+using Domain.Authentication.ValueObjects;
 using ErrorOr;
 using MediatR;
-using Place.Api.Domain.Authentication;
 
 public sealed class ForgotPasswordRequestHandler : IRequestHandler<ForgotPasswordCommand, ErrorOr<SendOTPResult>>
 {
