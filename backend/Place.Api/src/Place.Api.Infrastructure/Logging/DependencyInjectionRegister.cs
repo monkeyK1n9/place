@@ -15,12 +15,22 @@ using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
 using Serilog.Filters;
 using Serilog.Formatting.Compact;
 
+
+/// <summary>
+/// Provides extension methods for setting up Serilog logging in an ASP.NET Core application.
+/// </summary>
 public static class DependencyInjectionRegister
 {
     private const string ConsoleOutputTemplate = "{Timestamp:HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}";
 
     private const string SerilogSectionName = "Serilog";
 
+    /// <summary>
+    /// Adds Serilog configuration options to the service collection.
+    /// </summary>
+    /// <param name="services">The IServiceCollection to add services to.</param>
+    /// <param name="configuration">The configuration containing Serilog settings.</param>
+    /// <returns>The IServiceCollection for chaining.</returns>
     public static IServiceCollection AddLogger(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<SerilogOptions>(configuration.GetSection(SerilogSectionName));
@@ -28,6 +38,13 @@ public static class DependencyInjectionRegister
         return services;
     }
 
+    /// <summary>
+    /// Adds Serilog logging to the WebApplicationBuilder.
+    /// </summary>
+    /// <param name="builder">The WebApplicationBuilder to configure.</param>
+    /// <param name="configure">Optional action to further configure the LoggerConfiguration.</param>
+    /// <param name="loggerSectionName">Optional name of the configuration section for Serilog settings.</param>
+    /// <returns>The WebApplicationBuilder for chaining.</returns>
     public static WebApplicationBuilder AddLogging(this WebApplicationBuilder builder,
         Action<LoggerConfiguration>? configure = null,
         string loggerSectionName = SerilogSectionName)
@@ -36,6 +53,13 @@ public static class DependencyInjectionRegister
         return builder;
     }
 
+    /// <summary>
+    /// Adds Serilog logging to the IHostBuilder.
+    /// </summary>
+    /// <param name="builder">The IHostBuilder to configure.</param>
+    /// <param name="configure">Optional action to further configure the LoggerConfiguration.</param>
+    /// <param name="loggerSectionName">Optional name of the configuration section for Serilog settings.</param>
+    /// <returns>The IHostBuilder for chaining.</returns>
     private static IHostBuilder AddLogging(
         this IHostBuilder builder,
         Action<LoggerConfiguration>? configure = null,
@@ -54,6 +78,12 @@ public static class DependencyInjectionRegister
             configure?.Invoke(loggerConfiguration);
         });
 
+    /// <summary>
+    /// Configures the Serilog LoggerConfiguration based on provided SerilogOptions and environment name.
+    /// </summary>
+    /// <param name="serilogOptions">The SerilogOptions containing configuration settings.</param>
+    /// <param name="loggerConfiguration">The LoggerConfiguration to configure.</param>
+    /// <param name="environmentName">The name of the current environment.</param>
     private static void Configure(
         SerilogOptions serilogOptions,
         LoggerConfiguration loggerConfiguration,
@@ -95,6 +125,11 @@ public static class DependencyInjectionRegister
         Configure(loggerConfiguration, serilogOptions);
     }
 
+    /// <summary>
+    /// Configures the Serilog LoggerConfiguration with specified sinks and options.
+    /// </summary>
+    /// <param name="loggerConfiguration">The LoggerConfiguration to configure.</param>
+    /// <param name="options">The SerilogOptions containing configuration settings for sinks.</param>
     private static void Configure(LoggerConfiguration loggerConfiguration, SerilogOptions options)
     {
         SerilogOptions.ConsoleOptions consoleOptions = options.Console;
@@ -123,6 +158,11 @@ public static class DependencyInjectionRegister
         }
     }
 
+    /// <summary>
+    /// Converts a string representation of a log level to its LogEventLevel equivalent.
+    /// </summary>
+    /// <param name="level">The string representation of the log level.</param>
+    /// <returns>The corresponding LogEventLevel.</returns>
     private static LogEventLevel GetLogEventLevel(string level)
         => Enum.TryParse<LogEventLevel>(level, true, out LogEventLevel logLevel)
             ? logLevel
