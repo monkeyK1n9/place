@@ -1,18 +1,27 @@
 namespace Place.Api.Infrastructure.Logging;
 
 using System;
-using Micro.Observability.Logging;
+using System.Linq;
+using Destructurama;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
+using Serilog.Exceptions;
+using Serilog.Exceptions.Core;
+using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
+using Serilog.Filters;
 
 public static class DependencyInjectionRegister
 {
     private const string ConsoleOutputTemplate = "{Timestamp:HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}";
-    private const string FileOutputTemplate = "{Timestamp:HH:mm:ss} [{Level:u3}] ({SourceContext}.{Method}) {Message}{NewLine}{Exception}";
-    private const string AppSectionName = "app";
-    private const string SerilogSectionName = "serilog";
+
+    private const string FileOutputTemplate =
+        "{Timestamp:HH:mm:ss} [{Level:u3}] ({SourceContext}.{Method}) {Message}{NewLine}{Exception}";
+
+    private const string SerilogSectionName = "Serilog";
 
     public static IServiceCollection AddLogger(this IServiceCollection services, IConfiguration configuration)
     {
@@ -23,14 +32,17 @@ public static class DependencyInjectionRegister
 
     public static WebApplicationBuilder AddLogging(this WebApplicationBuilder builder,
         Action<LoggerConfiguration>? configure = null,
-        string loggerSectionName = SerilogSectionName, string appSectionName = AppSectionName)
+        string loggerSectionName = SerilogSectionName)
     {
-        builder.Host.AddLogging(configure, loggerSectionName, appSectionName);
+        builder.Host.AddLogging(configure, loggerSectionName);
         return builder;
     }
 
-    private static IHostBuilder AddLogging(this IHostBuilder builder, Action<LoggerConfiguration>? configure = null,
-        string loggerSectionName = SerilogSectionName, string appSectionName = AppSectionName)
+    private static IHostBuilder AddLogging(
+        this IHostBuilder builder,
+        Action<LoggerConfiguration>? configure = null,
+        string loggerSectionName = SerilogSectionName
+        )
         => builder.UseSerilog((context, loggerConfiguration) =>
         {
             if (string.IsNullOrWhiteSpace(loggerSectionName))
@@ -38,42 +50,46 @@ public static class DependencyInjectionRegister
                 loggerSectionName = SerilogSectionName;
             }
 
-            if (string.IsNullOrWhiteSpace(appSectionName))
-            {
-                appSectionName = AppSectionName;
-            }
+            SerilogOptions loggerOptions = context.Configuration.BindOptions<SerilogOptions>(loggerSectionName);
 
-            var appOptions = context.Configuration.BindOptions<AppOptions>(appSectionName);
-            var loggerOptions = context.Configuration.BindOptions<SerilogOptions>(loggerSectionName);
-
-            Configure(loggerOptions, appOptions, loggerConfiguration, context.HostingEnvironment.EnvironmentName);
+            Configure(loggerOptions, loggerConfiguration, context.HostingEnvironment.EnvironmentName);
             configure?.Invoke(loggerConfiguration);
         });
 
-    private static void Configure(SerilogOptions serilogOptions, AppOptions appOptions,
-        LoggerConfiguration loggerConfiguration, string environmentName)
+    private static void Configure(
+        SerilogOptions serilogOptions,
+        LoggerConfiguration loggerConfiguration,
+        string environmentName
+    )
     {
-        var level = GetLogEventLevel(serilogOptions.Level);
+        LogEventLevel level = GetLogEventLevel(serilogOptions.Level);
 
+        loggerConfiguration.Destructure.UsingAttributes();
+        loggerConfiguration
+            .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
+                .WithDefaultDestructurers()
+                .WithDestructurers(new[] {new DbUpdateExceptionDestructurer()}))
+            .Enrich.WithThreadName()
+            .Enrich.WithThreadId()
+            .Enrich.WithProcessId()
+            .Enrich.WithProcessName();
         loggerConfiguration.Enrich.FromLogContext()
             .MinimumLevel.Is(level)
-            .Enrich.WithProperty("Environment", environmentName)
-            .Enrich.WithProperty("Application", appOptions.Name)
-            .Enrich.WithProperty("Version", appOptions.Version);
+            .Enrich.WithProperty("Environment", environmentName);
 
-        foreach (var (key, value) in serilogOptions.Tags)
+        foreach ((string key, object value) in serilogOptions.Tags)
         {
             loggerConfiguration.Enrich.WithProperty(key, value);
         }
 
-        foreach (var (key, value) in serilogOptions.Overrides)
+        foreach ((string key, string value) in serilogOptions.Overrides)
         {
-            var logLevel = GetLogEventLevel(value);
+            LogEventLevel logLevel = GetLogEventLevel(value);
             loggerConfiguration.MinimumLevel.Override(key, logLevel);
         }
 
         serilogOptions.ExcludePaths?.ToList().ForEach(p => loggerConfiguration.Filter
-            .ByExcluding(Matching.WithProperty<string>("RequestPath", n => n.EndsWith(p))));
+            .ByExcluding(Matching.WithProperty<string>("RequestPath", n => n.EndsWith(p, StringComparison.Ordinal))));
 
         serilogOptions.ExcludeProperties?.ToList().ForEach(p => loggerConfiguration.Filter
             .ByExcluding(Matching.WithProperty(p)));
@@ -83,9 +99,9 @@ public static class DependencyInjectionRegister
 
     private static void Configure(LoggerConfiguration loggerConfiguration, SerilogOptions options)
     {
-        var consoleOptions = options.Console;
-        var fileOptions = options.File;
-        var seqOptions = options.Seq;
+        SerilogOptions.ConsoleOptions consoleOptions = options.Console;
+        SerilogOptions.FileOptions fileOptions = options.File;
+        SerilogOptions.SeqOptions seqOptions = options.Seq;
 
         if (consoleOptions.Enabled)
         {
@@ -94,8 +110,8 @@ public static class DependencyInjectionRegister
 
         if (fileOptions.Enabled)
         {
-            var path = string.IsNullOrWhiteSpace(fileOptions.Path) ? "logs/logs.txt" : fileOptions.Path;
-            if (!Enum.TryParse<RollingInterval>(fileOptions.Interval, true, out var interval))
+            string path = string.IsNullOrWhiteSpace(fileOptions.Path) ? "logs/logs.txt" : fileOptions.Path;
+            if (!Enum.TryParse<RollingInterval>(fileOptions.Interval, true, out RollingInterval interval))
             {
                 interval = RollingInterval.Day;
             }
@@ -110,7 +126,7 @@ public static class DependencyInjectionRegister
     }
 
     private static LogEventLevel GetLogEventLevel(string level)
-        => Enum.TryParse<LogEventLevel>(level, true, out var logLevel)
+        => Enum.TryParse<LogEventLevel>(level, true, out LogEventLevel logLevel)
             ? logLevel
             : LogEventLevel.Information;
 }
