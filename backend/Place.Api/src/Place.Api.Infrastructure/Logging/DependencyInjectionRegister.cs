@@ -13,13 +13,11 @@ using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
 using Serilog.Filters;
+using Serilog.Formatting.Compact;
 
 public static class DependencyInjectionRegister
 {
     private const string ConsoleOutputTemplate = "{Timestamp:HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}";
-
-    private const string FileOutputTemplate =
-        "{Timestamp:HH:mm:ss} [{Level:u3}] ({SourceContext}.{Method}) {Message}{NewLine}{Exception}";
 
     private const string SerilogSectionName = "Serilog";
 
@@ -116,7 +114,7 @@ public static class DependencyInjectionRegister
                 interval = RollingInterval.Day;
             }
 
-            loggerConfiguration.WriteTo.File(path, rollingInterval: interval, outputTemplate: FileOutputTemplate);
+            loggerConfiguration.WriteTo.File(new CompactJsonFormatter(),path, rollingInterval: interval);
         }
 
         if (seqOptions.Enabled)
