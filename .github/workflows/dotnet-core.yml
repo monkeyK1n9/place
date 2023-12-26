@@ -1,0 +1,29 @@
+name: .NET CI Build and tests on pull request
+
+on:
+  pull_request:
+    branches:
+      - main  # assuming main is your default branch
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'  # Adjust your .NET version
+
+      - name: Restore dependencies
+        working-directory: backend/Place.Api
+        run: dotnet restore
+
+      - name: Build
+        working-directory: backend/Place.Api
+        run: dotnet build --no-restore
+        
+      - name: Tests
+        working-directory: backend/Place.Api
+        run: dotnet build --no-restore --verbosity normal
